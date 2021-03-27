@@ -13,13 +13,25 @@ void initial(int type){
     userct=1;
     bookct=0;
     if(type==1){
-        bookct=1;
-        strcpy(books[1].author, "Jiangzemin");
-        strcpy(books[1].title, "He changed China");
+        bookct=3;
+        strcpy(books[1].author, "Haha");
+        strcpy(books[1].title, "China");
         books[1].id=1;
         books[1].yop=1926;
         books[1].stat=0;
         books[1].copies=9;
+        strcpy(books[2].author, "Fak");
+        strcpy(books[2].title, "Jspan");
+        books[2].id=2;
+        books[2].yop=1926;
+        books[2].stat=0;
+        books[2].copies=89;
+        strcpy(books[3].author, "Xixixixi");
+        strcpy(books[3].title, "testtestyixia");
+        books[3].id=3;
+        books[3].yop=1936;
+        books[3].stat=0;
+        books[3].copies=0;
     }
 }
 int main(){
@@ -75,6 +87,9 @@ int main(){
                 if(z==-2){
                     printf("You have already borrowed this book!\n");
                 }
+                if(z==-5){
+                    printf("You have borrowed too many books, please return them before borrowing new one.\n");
+                }
 
             }
             if(c==2 && log==0){
@@ -84,7 +99,7 @@ int main(){
                     scanf("%s",s2);
                     int r2=login(s1,s2);
                     if(r2>=1){
-                            printf("Welcome, %s !\n",users[r2].username);
+                            printf("Welcome, %s!\n",users[r2].username);
                             log=r2;
                     }
                     if(r2==-1)printf("Username not found!\n");
@@ -96,19 +111,20 @@ int main(){
                 int de;
                 scanf("%d",&de);
                 if(book_del(de))printf("Successfully deleted book %d which named %s\n",de,books[de].title);
+                else printf("Failed to delete, please try again.\n");
             }
             if(c==2 && log>=2){
                 printf("You have borrowed %d books.\n",users[log].borrowed);
-                printf("ID\t Title\t   Author\t Year of Publication\n");
+                printf("ID\tTitle\t\tAuthor\t\tYear of Publication\n");
                 for(int i=1;i<=users[log].borrowed;i++){
-                    printf("%d %-5s %-5s \t %2d\n",users[log].borrow[i],books[users[log].borrow[i]].title,books[users[log].borrow[i]].author,books[users[log].borrow[i]].yop);
+                    printf("%d\t%-8s\t%-8s\t%4d\n",users[log].borrow[i],books[users[log].borrow[i]].title,books[users[log].borrow[i]].author,books[users[log].borrow[i]].yop);
                 }
                 printf("Please enter the book ID you want to return:");
                 int ret;
                 scanf("%d",&ret);
                 int p=return_book(log,ret);
                 if(p==0)printf("Failed to return, please try again!\n");
-                if(p)printf("Successfully returned book %d!\n",ret);
+                if(p==1)printf("Successfully returned book %d!\n",ret);
                 if(p==-1)printf("You haven't borrowed this book!\n");
             }
             if(c==3){
@@ -122,19 +138,18 @@ int main(){
                 int r3=findbook(se,d);
                 if(r3==0)printf("No search results! \n");
                 else{
-                    printf("Find %d books. \nID\t Title\t   Author\t copies\t Year of Publication\n", r3 );
+                    printf("Find %d books. \nID\tTitle\t\tAuthor\t\tCopies\tYear of Publication\n", r3 );
                         for(int ii=0;ii<r3;ii++){
-                        printf("%d %-5s %-5s \t %2d\t %4d\n",answer[ii].id,answer[ii].title,answer[ii].author,answer[ii].copies,answer[ii].yop);
+                        printf("%d\t%-8s\t%-8s\t%4d\t%4d\n",answer[ii].id,answer[ii].title,answer[ii].author,answer[ii].copies,answer[ii].yop);
                     }
                 }
 
             }
             if(c==4){
-                printf("ID\t Title\t   Author\t copies\t Year of Publication\n");
+                printf("ID\tTitle\t\tAuthor\t\tCopies\tYear of Publication\n");
                     for(int i=1;i<=bookct;i++){
                         if(books[i].stat!=-1){
-                        printf("%d %-10s %-10s \t %4d\t %8d",i,books[i].title,books[i].author,books[i].copies,books[i].yop);
-                        printf("\n");
+                        printf("%d\t%-8s\t%-8s\t%4d\t%4d\n",i,books[i].title,books[i].author,books[i].copies,books[i].yop);
                     }
                     }
 
@@ -143,7 +158,10 @@ int main(){
                 if(log==0)return 0;
                 else log=0;
             }
-            else if(c>5 || c<1)printf("Invalid input, please try again!\n");
+            else if(c!=1 && c!=2 && c!=3 && c!=4 && c!=5){
+                    printf("Invalid input, please try again!\n");
+                    continue;
+            }
     }
 
 

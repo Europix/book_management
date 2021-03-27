@@ -58,8 +58,9 @@ int borrow_book(int userid, int bookid){
     if(users[userid].id==0 || books[bookid].id==0 || books[bookid].stat== -1)return 0; //failure
     if(books[bookid].copies<1)return -1; // have been borrowed by user
     for(int i=1;i<=users[userid].borrowed;i++){
-        if(users[userid].borrow[i]==bookid)return -2;
+        if(users[userid].borrow[i]==bookid)return -2; //already borrowed
     }
+    if(users[userid].borrowed>=5)return -10;
     users[userid].borrowed++;
     users[userid].borrow[users[userid].borrowed]=bookid;
     books[bookid].copies--;
