@@ -40,6 +40,7 @@ int main(){
     int log=0;
     char s1[300];
     char s2[300];
+    load_books();
     while(1){
             if(log==0)printf("Please choose an option:\n 1)Register an account\n 2)Login\n 3)Search for books\n 4)Display all books\n 5)Quit\nOption:");
             if(log>=2)printf("Please choose an option:\n 1)Borrow a book\n 2)Return a book\n 3)Search for books\n 4)Display all books\n 5)Sign out\nOption:");
@@ -155,7 +156,10 @@ int main(){
 
             }
             if(c==5){
-                if(log==0)return 0;
+                if(log==0){
+                    store_books();
+                    return 0;
+                }
                 else log=0;
             }
             else if(c!=1 && c!=2 && c!=3 && c!=4 && c!=5){
