@@ -29,7 +29,7 @@ int login(char u[],char p[]){
 }
 
 int store_books(){
-    FILE* fp = fopen("books.txt", "wb");
+    FILE* fp = fopen("books.txt", "w");
 	if(fp==NULL){
         return 0;
 	}
@@ -46,7 +46,7 @@ int store_books(){
 }
 
 int load_books(){
-        FILE* fp = fopen("books.txt", "rb");
+        FILE* fp = fopen("books.txt", "r");
         if(fp==NULL){
             return 0;
         }
