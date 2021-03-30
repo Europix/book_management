@@ -36,7 +36,7 @@ void initial(int type){
 }
 int main(){
     int c;
-    initial(1);
+    initial(1);// 0 for initial with librarian and 0 books , 1 else.
     int log=0;
     char s1[300];
     char s2[300];
@@ -58,17 +58,27 @@ int main(){
             if(c==1 && log==1){
                 printf("Please input the name(title) of the book(Max 150 characters):");
                 char new_title[152],new_author[152];
-                int new_copy,new_yop;
+                char new_copy[111],new_yop[111];
                 getchar();
                 scanf("%[^\n]",new_title);
                 printf("Please input the authors of the book(Max 150 characters):");
                 getchar();
                 scanf("%[^\n]",new_author);
                 printf("Please input the copies of the book:");
-                scanf("%d",&new_copy);
+                getchar();
+                scanf("%[^\n]",new_copy);
+                if(atoi(new_copy)==0){
+                    printf("Cannot add the book. Invalid input.\n");
+                    continue;
+                }
                 printf("Please input the publish year of the book:");
-                scanf("%d",&new_yop);
-                int rr=book_add(new_title,new_author,new_yop,new_copy);
+                getchar();
+                scanf("%[^\n]",new_yop);
+                if(atoi(new_yop)==0){
+                    printf("Cannot add the book. Invalid input.\n");
+                    continue;
+                }
+                int rr=book_add(new_title,new_author,atoi(new_yop),atoi(new_copy));
                 printf("Successfully added the book with ID %d\n",rr);
             }
             if(c==1 && log>=2){
@@ -76,7 +86,7 @@ int main(){
                 printf("Please enter the ID of the book which you want to borrow:");
                 scanf("%d",&bor);
                 int z=borrow_book(log,bor);
-                if(z){
+                if(z==1){
                         printf("Successfully borrowed book ID %d!\n",bor);
                 }
                 if(z==0){
@@ -163,15 +173,10 @@ int main(){
                 else log=0;
             }
             else if(c!=1 && c!=2 && c!=3 && c!=4 && c!=5){
+                    getchar();
                     printf("Invalid input, please try again!\n");
                     continue;
             }
     }
-
-
-
-
-
-
     return 0;
 }
